@@ -1,0 +1,598 @@
+/*   Base styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  line-height: 1.6;
+  color: #333;
+  overscroll-behavior: none;
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* App layout */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Header styles */
+.app-header {
+  background-color: #2563eb;
+  color: white;
+  padding: 0.75rem 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1100; /* Increased z-index to ensure dropdown appears above map */
+}
+
+.app-header .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.logo h1 {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* Button styles */
+.btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.25rem;
+  border: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-green {
+  background-color: #22c55e;
+}
+
+.btn-green:hover {
+  background-color: #16a34a;
+}
+
+.btn-amber {
+  background-color: #f59e0b;
+}
+
+.btn-amber:hover {
+  background-color: #d97706;
+}
+
+.icon {
+  flex-shrink: 0;
+}
+
+/* Dropdown styles */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  background-color: white;
+  min-width: 160px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  z-index: 2000; /* Increased z-index to ensure it appears above map */
+  border-radius: 0.25rem;
+  margin-top: 0.5rem;
+}
+
+.dropdown-content a {
+  color: #333;
+  padding: 0.75rem 1rem;
+  text-decoration: none;
+  display: block;
+  font-size: 0.875rem;
+}
+
+.dropdown-content a:hover {
+  background-color: #f5f5f5;
+}
+
+.dropdown.active .dropdown-content {
+  display: block;
+}
+
+/* Main content layout */
+.app-main {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* Sidebar styles */
+.photo-sidebar {
+  width: 320px;
+  background-color: white;
+  border-right: 1px solid #e5e5e5;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease;
+  z-index: 1000; /* Added z-index to ensure sidebar appears above map */
+}
+
+.sidebar-header {
+  padding: 1rem;
+  border-bottom: 1px solid #e5e5e5;
+  background-color: #f9fafb;
+}
+
+.sidebar-header h2 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #4b5563;
+  margin-bottom: 0.5rem;
+}
+
+.search-box {
+  position: relative;
+}
+
+.search-icon {
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #9ca3af;
+  pointer-events: none;
+}
+
+.search-box input {
+  width: 100%;
+  padding: 0.5rem 2rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+}
+
+.clear-search {
+  position: absolute;
+  right: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #9ca3af;
+  cursor: pointer;
+}
+
+.clear-search:hover {
+  color: #6b7280;
+}
+
+.photo-list {
+  flex: 1;
+  overflow-y: auto;
+  list-style: none;
+}
+
+.photo-item {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #f3f4f6;
+  cursor: pointer;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  transition: background-color 0.2s;
+}
+
+.photo-item:hover {
+  background-color: #edf5ff;
+}
+
+.photo-item.selected {
+  background-color: #dbeafe;
+}
+
+.photo-icon {
+  position: relative;
+  width: 2rem;
+  height: 2rem;
+}
+
+.photo-icon .pin-icon {
+  position: absolute;
+  right: -0.25rem;
+  bottom: -0.25rem;
+  color: #2563eb;
+}
+
+.photo-details {
+  flex: 1;
+  min-width: 0;
+}
+
+.photo-name {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #1f2937;
+  margin-bottom: 0.25rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.photo-date,
+.photo-coords {
+  font-size: 0.75rem;
+  color: #6b7280;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.empty-list {
+  padding: 2rem 1rem;
+  text-align: center;
+  color: #6b7280;
+}
+
+/* Map container styles */
+.map-container {
+  flex: 1;
+  position: relative;
+}
+
+.map {
+  width: 100%;
+  height: 100%;
+  background-color: #f1f5f9;
+  position: relative;
+  z-index: 10; /* Lower z-index for map to appear below controls */
+}
+
+.map-controls {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 1000;
+  background-color: white;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.25rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.control-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+}
+
+/* Photo info panel */
+.photo-info {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  width: 18rem;
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  overflow: hidden;
+}
+
+.photo-info-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.photo-info-title {
+  font-size: 1rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  color: #6b7280;
+  cursor: pointer;
+}
+
+.close-btn:hover {
+  color: #1f2937;
+}
+
+.photo-preview {
+  width: 100%;
+  height: 10rem;
+  object-fit: cover;
+}
+
+.photo-metadata {
+  padding: 0.75rem 1rem;
+}
+
+.metadata-item {
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.metadata-label {
+  font-weight: 600;
+}
+
+/* Upload overlay */
+.upload-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  padding: 1rem;
+}
+
+.upload-modal {
+  background-color: white;
+  border-radius: 0.5rem;
+  width: 100%;
+  max-width: 32rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+.modal-header {
+  padding: 1.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.modal-header h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.upload-area {
+  border: 2px dashed #d1d5db;
+  border-radius: 0.5rem;
+  margin: 1.25rem;
+  padding: 2rem;
+  text-align: center;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+.upload-area.dragging {
+  border-color: #2563eb;
+  background-color: #eff6ff;
+}
+
+.upload-icon {
+  color: #9ca3af;
+  margin-bottom: 1rem;
+}
+
+.upload-area p {
+  margin-bottom: 0.75rem;
+  color: #4b5563;
+}
+
+.file-input-label {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background-color: #2563eb;
+  color: white;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.file-input-label:hover {
+  background-color: #1d4ed8;
+}
+
+input[type="file"] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+.upload-hint {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin-top: 0.75rem;
+}
+
+.upload-message {
+  margin: 0 1.25rem 1.25rem;
+  padding: 0.75rem;
+  border-radius: 0.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.upload-message.error {
+  background-color: #fee2e2;
+  color: #b91c1c;
+}
+
+.upload-message.warning {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.upload-processing {
+  text-align: center;
+  margin: 1.25rem;
+}
+
+.spinner {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 2px solid rgba(37, 99, 235, 0.3);
+  border-radius: 50%;
+  border-top-color: #2563eb;
+  animation: spin 1s ease-in-out infinite;
+  margin-bottom: 0.5rem;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.modal-footer {
+  background-color: #f9fafb;
+  padding: 0.75rem 1.25rem;
+  border-top: 1px solid #e5e5e5;
+}
+
+.modal-footer p {
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+/* Custom Leaflet styles */
+.leaflet-popup-content {
+  margin: 0.75rem;
+  min-width: 12.5rem;
+  text-align: center;
+}
+
+.leaflet-popup-content img {
+  max-width: 100%;
+  max-height: 10rem;
+  object-fit: contain;
+  margin-bottom: 0.5rem;
+}
+
+.leaflet-popup-content h3 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.leaflet-popup-content button {
+  background: none;
+  border: none;
+  color: #2563eb;
+  font-size: 0.875rem;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.leaflet-tooltip {
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 2px 6px;
+  font-size: 12px;
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+/* Fix for map controls z-index issues */
+.leaflet-control-container {
+  z-index: 800; /* Lower than our custom controls */
+}
+
+.leaflet-control-zoom {
+  margin-top: 70px !important; /* Increased top margin to avoid overlap with the checkbox */
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .photo-sidebar {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    z-index: 100;
+    width: 90%;
+    max-width: 320px;
+    transform: translateX(-100%);
+  }
+  
+  .photo-sidebar.open {
+    transform: translateX(0);
+  }
+  
+  .hide-mobile {
+    display: none;
+  }
+  
+  .show-mobile {
+    display: inline;
+  }
+}
+
+@media (min-width: 769px) {
+  .show-mobile {
+    display: none;
+  }
+}
+ 
