@@ -1,0 +1,16 @@
+# Variables de entorno (Contiene tus llaves secretas)
+.env
+.env.local
+.env.*.local
+
+# Dependencias (No se suben porque son muy pesadas)
+node_modules/
+dist/
+build/
+
+# Archivos de sistema y logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.DS_Store
+.vscode/
