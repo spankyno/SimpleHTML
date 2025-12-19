@@ -1,4 +1,4 @@
-import { supabase } from './supabaseClient.js'; // Ajusta la ruta si es necesario
+import { supabase } from './src/supabaseClient.js'; // Ajusta la ruta si es necesario
 
 const authOverlay = document.getElementById('auth-overlay');
 const authForm = document.getElementById('auth-form');
