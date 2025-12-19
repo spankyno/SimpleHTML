@@ -1,3 +1,60 @@
+import { supabase } from './supabaseClient.js'; // Ajusta la ruta si es necesario
+
+const authOverlay = document.getElementById('auth-overlay');
+const authForm = document.getElementById('auth-form');
+const authTitle = document.getElementById('auth-title');
+const authEmail = document.getElementById('auth-email');
+const authPassword = document.getElementById('auth-password');
+const authSubmitBtn = document.getElementById('auth-submit-btn');
+const toggleAuth = document.getElementById('toggle-auth');
+const logoutBtn = document.getElementById('logout-btn');
+
+let isLogin = true;
+
+// 1. Alternar entre Login y Registro
+toggleAuth.addEventListener('click', (e) => {
+    e.preventDefault();
+    isLogin = !isLogin;
+    authTitle.innerText = isLogin ? "Iniciar Sesión" : "Crear Cuenta";
+    authSubmitBtn.innerText = isLogin ? "Entrar" : "Registrarse";
+    toggleAuth.innerText = isLogin ? "Regístrate aquí" : "Inicia sesión aquí";
+});
+
+// 2. Manejar el envío del formulario
+authForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = authEmail.value;
+    const password = authPassword.value;
+
+    if (isLogin) {
+        const { error } = await supabase.auth.signInWithPassword({ email, password });
+        if (error) alert(error.message);
+    } else {
+        const { error } = await supabase.auth.signUp({ email, password });
+        if (error) alert("Revisa tu email para confirmar el registro");
+        else alert("¡Registro casi listo! Confirma tu correo.");
+    }
+});
+
+// 3. Escuchar cambios de estado (Login/Logout)
+supabase.auth.onAuthStateChange((event, session) => {
+    if (session) {
+        // Usuario conectado
+        authOverlay.classList.add('hidden');
+        logoutBtn.classList.remove('hidden');
+        console.log("Sesión activa:", session.user.email);
+    } else {
+        // Usuario desconectado
+        authOverlay.classList.remove('hidden');
+        logoutBtn.classList.add('hidden');
+    }
+});
+
+// 4. Cerrar sesión
+logoutBtn.addEventListener('click', async () => {
+    await supabase.auth.signOut();
+});
+
 //   Sample geotagged photos with real Unsplash images
 const SAMPLE_PHOTOS = [
   {
